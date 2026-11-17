@@ -1,0 +1,19 @@
+# {{AUTHOR}}'s rules for every repo
+
+Repo groups, uv repos and commit gates are listed in {{WORKBENCH_JSON}}. Per-repo facts belong in that repo's CLAUDE.md, not here.
+
+## Hard rules (the workbench hooks back the git, stash, commit-trailer and uv rules, and a process cap backs the browser rule; if a hook blocks you, say so instead of working around it)
+- Commits and PRs are authored by {{AUTHOR}}. Never add a Claude trailer or mention Claude in them.
+- Do not push, open PRs or MRs until {{AUTHOR}} says so in this session.
+- Never use git stash; parallel worktrees share it. Commit to a WIP branch. Never SendMessage a running workflow agent (it starts a second copy).
+- Browser work (Playwright, built-in browser, Chrome) runs one agent at a time, never inside parallel subagents or workflows. Playwright tests run with --workers=1; pkill -f chrome-headless-shell after a run.
+- Python in uv-managed repos runs through `uv run`.
+
+## How to work
+- Think before coding and state assumptions. Make the smallest change that works, reuse what exists, add no speculative abstractions, touch only what the task needs.
+- Define done as a check you can run (a test that fails then passes, a probe, a screenshot), run it, and report counts, not adjectives. Compare sorted failure sets, not totals.
+- Questions that belong to a teammate, a lead or a client: draft the message and keep working. Give one recommendation, not a menu.
+- Before printing a runnable command that overwrites or deletes, name the target and warn. Printed commands get run.
+
+## Models
+- Main session Opus at medium effort. Sonnet subagents for exploring, gathering and gate runs. Raise effort for migrations, RLS/auth, money paths and audits.

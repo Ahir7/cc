@@ -1,0 +1,27 @@
+{
+  "author": "",
+  "uv_repos": [],
+  "pytest_env_required": {
+    "paths": [],
+    "accept": []
+  },
+  "browser_proc_max": 25,
+  "commit_gates": [],
+  "repo_groups": [],
+  "_examples": {
+    "uv_repos": ["~/code/api"],
+    "pytest_env_required": {
+      "paths": ["~/code/api"],
+      "accept": ["--env-file", "TEST_DATABASE_URL="]
+    },
+    "commit_gates": [
+      {"remote": "my-org/web", "require": "node_modules/.bin/eslint",
+       "checks": [
+         {"name": "eslint", "files": "\\.(ts|tsx|js|jsx)$", "cmd": "node_modules/.bin/eslint --max-warnings 0 {files}"}]}
+    ],
+    "repo_groups": [
+      {"name": "myapp", "memory_dir": "~/.claude/myapp-memory",
+       "repos": ["~/code/api", "~/code/web"]}
+    ]
+  }
+}

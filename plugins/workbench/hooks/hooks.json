@@ -1,0 +1,44 @@
+{
+  "description": "workbench enforcement: git guard, commit gate, browser process cap, Python formatter. Rules are read from workbench.json in the Claude config folder (or $WORKBENCH_CONFIG); a missing file or key turns that rule off.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/guard.sh\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/commit_gate.sh\"",
+            "timeout": 180
+          }
+        ]
+      },
+      {
+        "matcher": "Bash|mcp__playwright.*|mcp__Claude_Browser__.*|mcp__claude-in-chrome__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/browser_cap.sh\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/scripts/format_py.sh\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}

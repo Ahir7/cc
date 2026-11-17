@@ -1,0 +1,78 @@
+{
+  "env": {
+    "CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS": "6",
+    "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(uv run pytest *)",
+      "Bash(uv run ruff *)",
+      "Bash(uv run mypy *)",
+      "Bash(uv run alembic upgrade *)",
+      "Bash(uv run alembic current*)",
+      "Bash(uv sync *)",
+      "Bash(git status*)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git worktree list*)",
+      "Bash(docker compose ps*)",
+      "Bash(docker compose logs *)",
+      "Bash(docker ps*)",
+      "Bash(npm run *)",
+      "Bash(npx tsc *)",
+      "Bash(lsof -i *)"
+    ],
+    "ask": [
+      "Bash(git push*)",
+      "Bash(git branch -D*)",
+      "Bash(git worktree remove*)",
+      "Bash(git worktree prune*)",
+      "Bash(uv run alembic downgrade *)",
+      "Edit(~/.claude/settings.json)",
+      "Edit(~/.claude/hooks/**)",
+      "Edit(~/.claude/workbench-kit/**)",
+      "Edit(~/.claude/agents/**)",
+      "Edit(~/.claude/CLAUDE.md)",
+      "Edit(~/.claude/workbench.json)",
+      "Edit(~/.claude.json)",
+      "Edit(~/**/.claude/settings*.json)",
+      "Edit(~/**/.mcp.json)"
+    ],
+    "deny": [
+      "Bash(git stash*)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean*)",
+      "Bash(docker compose down*)",
+      "Bash(docker volume rm*)",
+      "Bash(docker volume prune*)",
+      "Bash(docker system prune*)",
+      "Bash(dropdb*)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/**/.env)",
+      "Read(~/**/.env.*)",
+      "Edit(~/**/.env)",
+      "Edit(~/**/.env.*)"
+    ]
+  },
+  "bashOutputMaxChars": 20000,
+  "autoMode": {
+    "environment": [
+      "$defaults"
+    ],
+    "allow": [
+      "$defaults"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "git push to any remote, or opening/merging a PR or MR, until the user says so in this session",
+      "alembic downgrade or any other migration rollback, or psql DROP/TRUNCATE, against a local, dev or test database",
+      "writes to production compose files or deploy playbooks, or any command that reaches a host, namespace or container whose name carries prod or production as a whole word"
+    ],
+    "hard_deny": [
+      "$defaults",
+      "docker volume rm or prune, docker system prune, dropdb, or rm -rf on a Postgres data directory"
+    ]
+  }
+}
